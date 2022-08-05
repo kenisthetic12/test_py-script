@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title> Test Folium </title>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <py-env>
+        - folium
+        - pandas
+        - path:
+            - input/input.csv
+    </py-env>
+
+    </head>
+
+    <body>
+        <div id="map" style="width: 100%; height: 100%"></div>
+        <py-script output="map">
+            import folium
+            import pandas as pd
+
+            data = pd.read_csv("input/input.csv")
+
+            m = folium.Map(location=[14.5,121],zoom_start=3)
+
+            for i,v in enumerate(data["location"]):
+                
+                lat = data["lat"].iloc[i]
+                lon = data["lon"].iloc[i]
+                
+                folium.CircleMarker(
+                    location=[lat,lon],
+                    radius= 5,
+                    tooltip = html,
+                    color = "white",
+                    opacity = .7,
+                    fill = True,
+                    fill_color = "white",
+                    fill_opacity = .7
+                ).add_to(m)
+
+            m
+        </py-script>
+    </body>
+    
+</html>
